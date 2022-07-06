@@ -550,7 +550,29 @@
           ]
         }
       ],
-      "on_response": [],
+      "on_response": [
+        {
+          "state": "BREAK"
+        },
+        {
+          "event": {
+            "id": 909,
+            "to": [57]
+          }
+        },
+        {
+          "event": {
+            "id": 99,
+            "to": [33]
+          }
+        },
+        {
+          "event": {
+            "id": 6,
+            "to": [47]
+          }
+        }
+      ],
       "on_timer": {
         "delay": 10,
         "actions": [

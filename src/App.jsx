@@ -32,7 +32,7 @@ function StateText({ state }) {
 }
 
 function ActionText({ action, fromEventId }) {
-  console.info({ action, fromEventId })
+  console.info("ActionText", { action, fromEventId })
   let message = ""
   if (action["event"]) {
     const event = keyToLowerCase(action["event"])
@@ -122,7 +122,8 @@ function TimeoutButton({ children, onClick, delay }) {
 
   React.useEffect(() => {
     if (second === 0) {
-      onClick()
+      // TODO: временно закоментировал, чтобы при коротких таймерах не происходил автоклик
+      // onClick()
     }
   }, [second, onClick])
 
@@ -185,8 +186,6 @@ function App() {
             <ul className="list-disc list-inside">
               {state.on_enter
                 ? state.on_enter.map((item, key) => {
-                    console.info({ key })
-
                     const actionSource = keyToLowerCase(item)
                     return (
                       <li key={key} className="my-4">
@@ -251,38 +250,71 @@ function App() {
         <div className="divider divider-horizontal"></div>
         <div className="w-3/6">
           {currentEvent ? (
-            <div className="grid flex-grow card bg-base-300 rounded-box">
-              <div className="text-lg font-bold bg-primary p-3">
-                {<EventText event={eventsData[currentEvent.id]} />}
-              </div>
-              <div className="px-3 pb-3">
-                <ul className="list-disc list-inside">
-                  {currentEvent.actions.map((item, key) => {
-                    const actionSource = keyToLowerCase(item)
-                    return (
-                      <li key={key} className="my-4">
-                        <ActionText action={actionSource} fromEventId={currentEvent.id} />
-                      </li>
-                    )
-                  })}
-                </ul>
+            <>
+              <div className="mb-5 grid flex-grow card bg-base-300 rounded-box">
+                <div className="text-lg font-bold bg-primary p-3">
+                  {<EventText event={eventsData[currentEvent.id]} />}
+                </div>
+                <div className="px-3 pb-3">
+                  <ul className="list-disc list-inside">
+                    {currentEvent.actions.map((item, key) => {
+                      const actionSource = keyToLowerCase(item)
+                      return (
+                        <li key={key} className="my-4">
+                          <ActionText action={actionSource} fromEventId={currentEvent.id} />
+                        </li>
+                      )
+                    })}
+                  </ul>
 
-                <button
-                  className="btn"
-                  onClick={() => {
-                    const nextState = getNextStateFromActions(currentEvent.actions)
-                    if (nextState) {
-                      setCurrentState(nextState)
-                      setCurrentEvent(null)
-                    } else {
-                      alert("Ошибка: в данном действии нет следующего состояния")
-                    }
-                  }}
-                >
-                  Выполнить
-                </button>
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      const nextState = getNextStateFromActions(currentEvent.actions)
+                      if (nextState) {
+                        setCurrentState(nextState)
+                        setCurrentEvent(null)
+                      } else {
+                        alert("Ошибка: в данном действии нет следующего состояния")
+                      }
+                    }}
+                  >
+                    Выполнить
+                  </button>
+                </div>
               </div>
-            </div>
+              {Array.isArray(state.on_response) && state.on_response.length > 0 ? (
+                <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
+                  <div className="text-lg font-bold">Действия выполняемые в случае неответа:</div>
+
+                  <ul className="list-disc list-inside">
+                    {state.on_response.map((item, key) => {
+                      const actionSource = keyToLowerCase(item)
+                      return (
+                        <li key={key} className="my-4">
+                          <ActionText action={actionSource} />
+                        </li>
+                      )
+                    })}
+                  </ul>
+
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      const nextState = getNextStateFromActions(state.on_response)
+                      if (nextState) {
+                        setCurrentState(nextState)
+                        setCurrentEvent(null)
+                      } else {
+                        alert("Ошибка: в данном действии нет следующего состояния")
+                      }
+                    }}
+                  >
+                    Выполнить
+                  </button>
+                </div>
+              ) : null}
+            </>
           ) : null}
         </div>
       </div>
