@@ -172,152 +172,8 @@ function App() {
     )
 
   return (
-    <>
-      <Layout>
-        <div className="mt-10 flex w-full">
-          <div className="w-3/6">
-            <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
-              <div className="text-lg font-bold">Действия, выполняемые при входе в состояние:</div>
-              <ul className="list-disc list-inside">
-                {state.on_enter
-                  ? state.on_enter.map((item, key) => {
-                      const actionSource = keyToLowerCase(item)
-                      return (
-                        <li key={key} className="my-4">
-                          <ActionText action={actionSource} />
-                        </li>
-                      )
-                    })
-                  : null}
-              </ul>
-            </div>
-            <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
-              <div className="text-lg font-bold">
-                Ожидаемые в текущем состоянии входящие сообщения:
-              </div>
-              {state.on_events
-                ? state.on_events.map((event, key) => {
-                    return (
-                      <button
-                        key={event.id}
-                        className="btn btn-primary mt-5 mr-5"
-                        onClick={() => setCurrentEvent(event)}
-                      >
-                        <EventText event={eventsData[event.id]} />
-                      </button>
-                    )
-                  })
-                : null}
-            </div>
-
-            {state.on_timer && state.on_timer.actions ? (
-              <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
-                <div className="text-lg font-bold">Таймер на получение событий:</div>
-
-                <ul className="list-disc list-inside">
-                  {state.on_timer.actions.map((item, key) => {
-                    const actionSource = keyToLowerCase(item)
-                    return (
-                      <li key={key} className="my-4">
-                        <ActionText action={actionSource} />
-                      </li>
-                    )
-                  })}
-                </ul>
-
-                {state.on_timer.delay ? (
-                  <TimeoutButton
-                    delay={state.on_timer.delay}
-                    onClick={() => {
-                      const nextState = getNextStateFromActions(state.on_timer.actions)
-                      if (nextState) {
-                        setCurrentState(nextState)
-                        setCurrentEvent(null)
-                      } else {
-                        alert("Ошибка: в данном действии нет следующего состояния")
-                      }
-                    }}
-                  >
-                    Выполнить
-                  </TimeoutButton>
-                ) : null}
-              </div>
-            ) : null}
-
-            {Array.isArray(state.on_response) && state.on_response.length > 0 ? (
-              <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
-                <div className="text-lg font-bold">Действия выполняемые в случае неответа:</div>
-
-                <ul className="list-disc list-inside">
-                  {state.on_response.map((item, key) => {
-                    const actionSource = keyToLowerCase(item)
-                    return (
-                      <li key={key} className="my-4">
-                        <ActionText action={actionSource} />
-                      </li>
-                    )
-                  })}
-                </ul>
-
-                <button
-                  className="btn"
-                  onClick={() => {
-                    const nextState = getNextStateFromActions(state.on_response)
-                    if (nextState) {
-                      setCurrentState(nextState)
-                      setCurrentEvent(null)
-                    } else {
-                      alert("Ошибка: в данном действии нет следующего состояния")
-                    }
-                  }}
-                >
-                  Выполнить
-                </button>
-              </div>
-            ) : null}
-          </div>
-          <div className="divider divider-horizontal"></div>
-          <div className="w-3/6">
-            {currentEvent ? (
-              <div className="mb-5 grid flex-grow card bg-base-300 rounded-box">
-                <div className="text-lg font-bold bg-slate-300 p-3">
-                  Действия, выполняемые при получении сообщения:
-                  {<EventText event={eventsData[currentEvent.id]} />}
-                </div>
-                <div className="px-3 pb-3">
-                  <ul className="list-disc list-inside">
-                    {currentEvent.actions.map((item, key) => {
-                      const actionSource = keyToLowerCase(item)
-                      return (
-                        <li key={key} className="my-4">
-                          <ActionText action={actionSource} fromEventId={currentEvent.id} />
-                        </li>
-                      )
-                    })}
-                  </ul>
-
-                  <button
-                    className="btn"
-                    onClick={() => {
-                      const nextState = getNextStateFromActions(currentEvent.actions)
-                      if (nextState) {
-                        setCurrentState(nextState)
-                        setCurrentEvent(null)
-                      } else {
-                        alert("Ошибка: в данном действии нет следующего состояния")
-                      }
-                    }}
-                  >
-                    Выполнить
-                  </button>
-                </div>
-              </div>
-            ) : null}
-          </div>
-        </div>
-        <div className="h-72"></div>
-      </Layout>
-      <div className="fixed w-full bottom-0 bg-white pt-5 border-t-8 border-base-300">
+    <Layout>
+      <div className="fixed w-full left-0 top-0 bg-white pt-5 drop-shadow-xl">
         <Layout>
           <div className="text-2xl font-bold text-gray-900 mb-2">Текущее состояние:</div>
           <div className="mb-6">
@@ -338,7 +194,149 @@ function App() {
           </div>
         </Layout>
       </div>
-    </>
+      <div className="h-64"></div>
+      <div className="mt-10 flex w-full">
+        <div className="w-3/6">
+          <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
+            <div className="text-lg font-bold">Действия, выполняемые при входе в состояние:</div>
+            <ul className="list-disc list-inside">
+              {state.on_enter
+                ? state.on_enter.map((item, key) => {
+                    const actionSource = keyToLowerCase(item)
+                    return (
+                      <li key={key} className="my-4">
+                        <ActionText action={actionSource} />
+                      </li>
+                    )
+                  })
+                : null}
+            </ul>
+          </div>
+          <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
+            <div className="text-lg font-bold">
+              Ожидаемые в текущем состоянии входящие сообщения:
+            </div>
+            {state.on_events
+              ? state.on_events.map((event, key) => {
+                  return (
+                    <button
+                      key={event.id}
+                      className="btn btn-primary mt-5 mr-5"
+                      onClick={() => setCurrentEvent(event)}
+                    >
+                      <EventText event={eventsData[event.id]} />
+                    </button>
+                  )
+                })
+              : null}
+          </div>
+
+          {state.on_timer && state.on_timer.actions ? (
+            <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
+              <div className="text-lg font-bold">Таймер на получение событий:</div>
+
+              <ul className="list-disc list-inside">
+                {state.on_timer.actions.map((item, key) => {
+                  const actionSource = keyToLowerCase(item)
+                  return (
+                    <li key={key} className="my-4">
+                      <ActionText action={actionSource} />
+                    </li>
+                  )
+                })}
+              </ul>
+
+              {state.on_timer.delay ? (
+                <TimeoutButton
+                  delay={state.on_timer.delay}
+                  onClick={() => {
+                    const nextState = getNextStateFromActions(state.on_timer.actions)
+                    if (nextState) {
+                      setCurrentState(nextState)
+                      setCurrentEvent(null)
+                    } else {
+                      alert("Ошибка: в данном действии нет следующего состояния")
+                    }
+                  }}
+                >
+                  Выполнить
+                </TimeoutButton>
+              ) : null}
+            </div>
+          ) : null}
+
+          {Array.isArray(state.on_response) && state.on_response.length > 0 ? (
+            <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
+              <div className="text-lg font-bold">Действия выполняемые в случае неответа:</div>
+
+              <ul className="list-disc list-inside">
+                {state.on_response.map((item, key) => {
+                  const actionSource = keyToLowerCase(item)
+                  return (
+                    <li key={key} className="my-4">
+                      <ActionText action={actionSource} />
+                    </li>
+                  )
+                })}
+              </ul>
+
+              <button
+                className="btn"
+                onClick={() => {
+                  const nextState = getNextStateFromActions(state.on_response)
+                  if (nextState) {
+                    setCurrentState(nextState)
+                    setCurrentEvent(null)
+                  } else {
+                    alert("Ошибка: в данном действии нет следующего состояния")
+                  }
+                }}
+              >
+                Выполнить
+              </button>
+            </div>
+          ) : null}
+        </div>
+        <div className="divider divider-horizontal"></div>
+        <div className="w-3/6">
+          {currentEvent ? (
+            <div className="mb-5 grid flex-grow card bg-base-300 rounded-box">
+              <div className="text-lg font-bold bg-slate-300 p-3">
+                Действия, выполняемые при получении сообщения:
+                {<EventText event={eventsData[currentEvent.id]} />}
+              </div>
+              <div className="px-3 pb-3">
+                <ul className="list-disc list-inside">
+                  {currentEvent.actions.map((item, key) => {
+                    const actionSource = keyToLowerCase(item)
+                    return (
+                      <li key={key} className="my-4">
+                        <ActionText action={actionSource} fromEventId={currentEvent.id} />
+                      </li>
+                    )
+                  })}
+                </ul>
+
+                <button
+                  className="btn"
+                  onClick={() => {
+                    const nextState = getNextStateFromActions(currentEvent.actions)
+                    if (nextState) {
+                      setCurrentState(nextState)
+                      setCurrentEvent(null)
+                    } else {
+                      alert("Ошибка: в данном действии нет следующего состояния")
+                    }
+                  }}
+                >
+                  Выполнить
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </Layout>
   )
 }
 
