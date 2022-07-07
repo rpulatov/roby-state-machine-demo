@@ -1,7 +1,6 @@
 import React from "react"
 
 import Layout from "./components/Layout"
-import State from "./components/State"
 
 import { eventsData, servicesData, statesData, keyToLowerCase } from "./data"
 
