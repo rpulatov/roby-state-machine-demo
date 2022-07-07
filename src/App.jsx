@@ -39,7 +39,7 @@ function ActionText({ action, fromEventId }) {
     const services = (Array.isArray(event.to) ? event.to : [event.to]).map(id => servicesData[id])
     message = (
       <>
-        Отправить новое сообщение <EventText event={eventsData[event.id]} /> в сервис
+        Создать и отправить новое сообщение <EventText event={eventsData[event.id]} /> в сервис
         {services.length > 1 ? "ы " : " "}
         {services.map((service, index) => (
           <React.Fragment key={service.id}>
@@ -54,7 +54,7 @@ function ActionText({ action, fromEventId }) {
     const services = (Array.isArray(event.to) ? event.to : [event.to]).map(id => servicesData[id])
     message = (
       <>
-        Отправить новое сообщение <EventText event={eventsData[event.id]} /> в сервис
+        Создать и отправить новое сообщение <EventText event={eventsData[event.id]} /> в сервис
         {services.length > 1 ? "ы " : " "}
         {services.map((service, index) => (
           <React.Fragment key={service.id}>
@@ -72,7 +72,7 @@ function ActionText({ action, fromEventId }) {
 
     message = (
       <>
-        Сообщение <EventText event={eventsData[fromEventId]} /> переадресовать в сервис
+        Полученное сообщение <EventText event={eventsData[fromEventId]} /> переадресовать в сервис
         {services.length > 1 ? "ы " : " "}
         {services.map((service, index) => (
           <React.Fragment key={service.id}>
@@ -89,7 +89,7 @@ function ActionText({ action, fromEventId }) {
 
     message = (
       <>
-        Сообщение <EventText event={eventsData[fromEventId]} /> переадресовать в сервис
+        Полученное сообщение <EventText event={eventsData[fromEventId]} /> переадресовать в сервис
         {services.length > 1 ? "ы " : " "}
         {services.map((service, index) => (
           <React.Fragment key={service.id}>
@@ -182,7 +182,7 @@ function App() {
       <div className="mt-10 flex w-full">
         <div className="w-3/6">
           <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
-            <div className="text-lg font-bold">Действия на входе состояния:</div>
+            <div className="text-lg font-bold">Действия, выполняемые при входе в состояние:</div>
             <ul className="list-disc list-inside">
               {state.on_enter
                 ? state.on_enter.map((item, key) => {
@@ -197,7 +197,7 @@ function App() {
             </ul>
           </div>
           <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
-            <div className="text-lg font-bold">Доступные входящие сообщения:</div>
+            <div className="text-lg font-bold">Ожидаемые в текущем состоянии входящие сообщения:</div>
             {state.on_events
               ? state.on_events.map((event, key) => {
                   return (
@@ -215,7 +215,7 @@ function App() {
 
           {state.on_timer && state.on_timer.actions ? (
             <div className="mb-5 p-3 flex-grow bg-base-300 rounded-box">
-              <div className="text-lg font-bold">Таймер:</div>
+              <div className="text-lg font-bold">Таймер на получение событий:</div>
 
               <ul className="list-disc list-inside">
                 {state.on_timer.actions.map((item, key) => {
@@ -249,10 +249,11 @@ function App() {
         </div>
         <div className="divider divider-horizontal"></div>
         <div className="w-3/6">
+
           {currentEvent ? (
             <>
               <div className="mb-5 grid flex-grow card bg-base-300 rounded-box">
-                <div className="text-lg font-bold bg-primary p-3">
+               <div className="text-lg font-bold bg-primary p-3"> Действия, выполняемые при получении сообщения:
                   {<EventText event={eventsData[currentEvent.id]} />}
                 </div>
                 <div className="px-3 pb-3">
