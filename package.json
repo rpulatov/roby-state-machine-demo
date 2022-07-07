@@ -2,7 +2,7 @@
   "name": "roby-statemachine-demo",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://rpulatov.github.io/roby-statemachine-demo",
+  "homepage": "https://rpulatov.github.io/roby-state-machine-demo",
   "scripts": {
     "start": "vite",
     "build": "vite build",
