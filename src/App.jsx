@@ -53,7 +53,7 @@ function ActionText({ action, fromEventId }) {
     const services = (Array.isArray(event.to) ? event.to : [event.to]).map(id => servicesData[id])
     message = (
       <>
-       Отправить распоряжение
+        Отправить распоряжение
         {services.length > 1 ? " " : " "}
         {services.map((service, index) => (
           <React.Fragment key={service.id}>
@@ -71,7 +71,7 @@ function ActionText({ action, fromEventId }) {
 
     message = (
       <>
-       Отправить распоряжение
+        Отправить распоряжение
         {services.length > 1 ? " " : " "}
         {services.map((service, index) => (
           <React.Fragment key={service.id}>
@@ -88,7 +88,7 @@ function ActionText({ action, fromEventId }) {
 
     message = (
       <>
-       Отправить распоряжение
+        Отправить распоряжение
         {services.length > 1 ? " " : " "}
         {services.map((service, index) => (
           <React.Fragment key={service.id}>
@@ -174,12 +174,14 @@ function App() {
     <Layout>
       <div className="fixed w-full left-0 top-0 bg-white pt-5 drop-shadow-xl">
         <Layout>
-          <div className="text-2xl font-bold text-gray-900 mb-2">Текущее состояние:</div>
-          <div className="mb-6">
-            <div className="rounded-lg px-2 py-1 inline-block">
-              <div className="text-2xl">{state.name}</div>
-              <div className="text-base">{state.description}</div>
-            </div>
+          <div className="flex flex-row mb-2 ">
+            <div className="text-2xl font-bold text-gray-900 mr-2">Cценарий: </div>
+            <div className="text-2xl">Scan&Go без кофемашины</div>
+          </div>
+          <div className="flex flex-row mb-6 ">
+            <div className="text-2xl font-bold text-gray-900 mr-2">Cостояние:</div>
+            <div className="text-2xl mr-2">{state.name}</div>
+            <div className="text-base mt-1">({state.description})</div>
           </div>
           <div className="btm-nav btm-nav-lg ">
             {Object.values(statesData).map(item => (
