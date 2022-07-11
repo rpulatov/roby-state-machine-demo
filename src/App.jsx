@@ -38,8 +38,8 @@ function ActionText({ action, fromEventId }) {
     const services = (Array.isArray(event.to) ? event.to : [event.to]).map(id => servicesData[id])
     message = (
       <>
-        Создать и отправить новое сообщение <EventText event={eventsData[event.id]} /> в сервис
-        {services.length > 1 ? "ы " : " "}
+        Отправить распоряжение
+        {services.length > 1 ? " " : " "}
         {services.map((service, index) => (
           <React.Fragment key={service.id}>
             <ServiceText service={service} />
@@ -53,8 +53,8 @@ function ActionText({ action, fromEventId }) {
     const services = (Array.isArray(event.to) ? event.to : [event.to]).map(id => servicesData[id])
     message = (
       <>
-        Создать и отправить новое сообщение <EventText event={eventsData[event.id]} /> в сервис
-        {services.length > 1 ? "ы " : " "}
+       Отправить распоряжение
+        {services.length > 1 ? " " : " "}
         {services.map((service, index) => (
           <React.Fragment key={service.id}>
             <ServiceText service={service} />
@@ -71,8 +71,8 @@ function ActionText({ action, fromEventId }) {
 
     message = (
       <>
-        Полученное сообщение <EventText event={eventsData[fromEventId]} /> переадресовать в сервис
-        {services.length > 1 ? "ы " : " "}
+       Отправить распоряжение
+        {services.length > 1 ? " " : " "}
         {services.map((service, index) => (
           <React.Fragment key={service.id}>
             <ServiceText service={service} />
@@ -88,8 +88,8 @@ function ActionText({ action, fromEventId }) {
 
     message = (
       <>
-        Полученное сообщение <EventText event={eventsData[fromEventId]} /> переадресовать в сервис
-        {services.length > 1 ? "ы " : " "}
+       Отправить распоряжение
+        {services.length > 1 ? " " : " "}
         {services.map((service, index) => (
           <React.Fragment key={service.id}>
             <ServiceText service={service} />
